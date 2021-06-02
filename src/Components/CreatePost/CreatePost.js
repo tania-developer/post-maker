@@ -14,15 +14,14 @@ const CreatePost = () => {
         const userData = {
             author: data.userName,
             authorAvatar: data.profilePic,
-         
-            postImag: postPhoto
+            postImag: data.postPhoto
         }
         fetch('https://my-json-server.typicode.com/tania-developer/post-maker/users',{
             method: 'POST',
             headers: {
                 'content-type': 'application/json; charset=UTF-8'
             },
-            body: JSON.stringify(pdData)
+            body: JSON.stringify(userData)
         })
         .then(res => console.log('server side response', res));
          };
