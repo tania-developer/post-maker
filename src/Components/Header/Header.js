@@ -16,16 +16,16 @@ const headersData = [
         href: "/home",
     },
     {
-        label: "Orders",
-        href: "/orders",
+        label: "Dashboard",
+        href: "/dashboard",
     },
     {
-        label: "Admin",
-        href: "/admin",
+        label: "Like",
+        href: "/likePost",
     },
     {
-        label: "Checkout",
-        href: "/checkout",
+        label: "dislike",
+        href: "/dislike",
     },
     {
         label: "Log In",
@@ -36,10 +36,10 @@ const headersData = [
 
 const useStyles = makeStyles(() => ({
     header: {
-        backgroundColor: "#F5F1E6",
+        backgroundColor: "#1877F2",
         paddingRight: "79px",
         paddingLeft: "118px",
-        marginBottom: "100px",
+        
         "@media (max-width: 900px)": {
             paddingLeft: 0,
         },
@@ -48,15 +48,15 @@ const useStyles = makeStyles(() => ({
         fontFamily: "Lobster, cursive",
         fontWeight: 400,
         fontSize: "40px",
-        color: "#851753",
+        color: "#fff",
         textAlign: "left",
     },
     menuButton: {
         fontFamily: "Open Sans, sans-serif",
-        fontWeight: 700,
+        fontWeight: 600,
         size: "18px",
         marginLeft: "38px",
-        color: "#7F7F7F",
+        color: "#fff",
     },
     toolbar: {
         display: "flex",
@@ -113,7 +113,7 @@ const Header = () => {
 
     const headerLogo = (
         <Typography variant="h6" className={logo}>
-            Gems Galore
+            Post Maker
         </Typography>
     );
 

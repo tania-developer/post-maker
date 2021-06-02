@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import PostCard from '../PostCard/PostCard';
+import CircularProgress from '@material-ui/core/CircularProgress';
+import './Home.css'
 
 const Home = () => {
     const [users, setUsers] = useState([]);
@@ -10,7 +12,10 @@ const Home = () => {
         .then(data => setUsers(data));
     },[])
     return (
-        <div>
+        <div className="post-container">
+            {
+                users.length === 0 &&<CircularProgress disableShrink />
+            }
             {
                 users.map(user => <PostCard user = {user} key={user.id}></PostCard>)
             }

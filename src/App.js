@@ -8,6 +8,8 @@ import {
   Route,
 
 } from "react-router-dom";
+import CreatePost from './Components/CreatePost/CreatePost';
+import Like from './Components/Like/Like';
 
 
 function App() {
@@ -17,16 +19,16 @@ function App() {
       <Router>
         <Header></Header>
         <Switch>
-            <Route path="/">
+            <Route exact path="/">
               <Home />
             </Route>
-            <Route path="/orders">
-              <Home />
+            <Route path="/dashboard">
+              <CreatePost/>
             </Route>
-            <Route path="/admin">
-              <Home />
+            <Route path="/likePost">
+              <Like></Like>
             </Route>
-            <Route path="/checkout">
+            <Route path="/dislike">
               <Home />
             </Route>
             <Route path="/login">
