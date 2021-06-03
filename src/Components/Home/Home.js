@@ -10,7 +10,7 @@ const Home = () => {
         fetch('https://my-json-server.typicode.com/tania-developer/post-maker/users')
         .then(res => res.json())
         .then(data => setAllPost(data));
-    },[]);
+    });
 
     
     return (
