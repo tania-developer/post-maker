@@ -1,24 +1,23 @@
 import axios from 'axios';
 import React, { useState } from 'react';
 import { useForm } from "react-hook-form";
-import './CreatePost.css'
-import CircularProgress from '@material-ui/core/CircularProgress';
+import { useParams } from 'react-router';
 
-const CreatePost = () => {
+
+const UpdatePost = () => {
+    const {id} = useParams();
     const { register, handleSubmit, reset, formState: { errors }} = useForm();
     const [image, setImage] = useState(' ');
-    const [postPhoto, setPostPhoto] = useState(' ');
     const [userAdded, setUserAdded] = useState(false);
 
 
-    const handleAddProduct = data => {
+    const handleUpdatePost = data => {
         const userData = {
             author: data.userName,
-            authorAvatar: image,
-            postImag: postPhoto
+            authorAvatar: image
         }
-        fetch('https://my-json-server.typicode.com/tania-developer/post-maker/users',{
-            method: 'POST',
+        fetch(`https://my-json-server.typicode.com/tania-developer/post-maker/users/${id}`,{
+            method: 'PATCH',
             headers: {
                 'content-type': 'application/json; charset=UTF-8'
             },
@@ -55,29 +54,12 @@ const CreatePost = () => {
           });
     }
 
-    const handlePostImgUpload = event =>{
-        const imageData = new FormData();
-        imageData.set('key', 'c2591ce672b45bd63749672d354a304d');
-        imageData.append('image', event.target.files[0]);
-
-
-        axios.post('https://api.imgbb.com/1/upload', 
-            imageData
-          )
-          .then(function (response) {
-            setPostPhoto(response.data.data.display_url);
-          })
-          .catch(function (error) {
-            console.log(error);
-          });
-    }
-
     return (
         <div className="createPost">
-            <h2 className="post__header">Add Product</h2>
-            <form className="createPost__form" onSubmit={handleSubmit(handleAddProduct)}>
+            <h2 className="post__header">Update User {id}</h2>
+            <form className="createPost__form" onSubmit={handleSubmit(handleUpdatePost)}>
                 {
-                    userAdded && <p className="success">User successfully added to the database.</p>
+                    userAdded && <p className="success">Update user successfully.</p>
                 }
                 <div className="createPost__form--content">
                     <div className="input__group">
@@ -91,15 +73,6 @@ const CreatePost = () => {
                         {errors.userName?.type === 'required' && <p className="error">*user name is required</p>}
                     </div>
                     <div className="input__group">
-                        <label htmlFor="postDetails">Post Details</label>
-                        <input
-                            type="text"
-                            {...register("postDetails", { required: true })}
-                            placeholder="Enter details"
-                        />
-                        {errors.postDetails?.type === 'required' && <p className="error">* details is required</p>}
-                    </div>
-                    <div className="input__group">
                         <label htmlFor="profilePic">Add Profile Pic</label>
                         <input
                             type="file"
@@ -108,22 +81,13 @@ const CreatePost = () => {
                         />
                         {errors.profilePic?.type === 'required' && <p className="error">* profile pic is required</p>}
                     </div>
-                    <div className="input__group">
-                        <label htmlFor="postPhoto">Add Post Photo</label>
-                        <input
-                            type="file"
-                            {...register("postPhoto", {required: true })}
-                            onChange={handlePostImgUpload}
-                        />
-                        {errors.postPhoto?.type === 'required' && <p className="error">* Photo is required</p>}
-                    </div>
                 </div>
                 <div className="btn--box">
-                    {!image && <CircularProgress disableShrink />} <input className={`btn ${!image && 'disabled'}`} type="submit" value="Save" />
+                <input className="btn" type="submit" value="Submit"/>
                 </div>
             </form>
         </div>
     );
 };
 
-export default CreatePost;
+export default UpdatePost;

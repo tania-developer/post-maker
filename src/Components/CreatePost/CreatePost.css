@@ -2,13 +2,16 @@
     padding: 30px;
 }
 
+.post__header{
+    margin-left: 80px;
+}
 .createPost__form--content {
     background: #fff;
     padding: 30px;
     border-radius: 15px;
     display: grid;
     grid-template-columns: 1fr 1fr;
-    grid-gap: 25px;
+    grid-gap: 50px;
 }
 
 .createPost__form .input__group label {
@@ -40,6 +43,11 @@
 
 .createPost__form .btn--box .disabled {
     background: #183153a1;
+}
+
+.success{
+    color: rgb(7, 128, 57);
+    font-size: 16px;
 }
 
 .btn{

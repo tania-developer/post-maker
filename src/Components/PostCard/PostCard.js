@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useContext, useState } from 'react';
 import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
@@ -9,10 +9,12 @@ import CardActions from '@material-ui/core/CardActions';
 import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import FavoriteIcon from '@material-ui/icons/ThumbUp';
-import ShareIcon from '@material-ui/icons/ThumbDown';
-import ExpandMoreIcon from '@material-ui/icons/Share';
+import LikeIcon from '@material-ui/icons/ThumbUp';
+import DislikeIcon from '@material-ui/icons/ThumbDown';
+import ShareIcon from '@material-ui/icons/Share';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
+import { blue } from '@material-ui/core/colors';
+import { DislikeContext, LikeContext } from '../../App';
 
 const useStyles = makeStyles((theme) => ({
     root: {
@@ -26,14 +28,48 @@ const useStyles = makeStyles((theme) => ({
     expand: {
         marginLeft: 'auto',
     },
-    avatar: {
-        backgroundImage: "https://i.ibb.co/rZQjp1g/otosaka.jpg",
-    },
+    color: {
+        color: blue[500],
+      },
+    
 }));
 
-const PostCard = (props) => {
-    const {author, authorAvatar, postImg} = props.user;
+const PostCard = (props) => { 
     const classes = useStyles();
+    const {author, authorAvatar, postImg} = props.user;
+    const [likeActive, setLikeActive] = useState(false);
+    const [dislikeActive, setDislikeActive] = useState(false);
+    const [likes, setLikes] = useContext(LikeContext);
+    const [dislikes, setDislikes] = useContext(DislikeContext);
+
+    const handleLikePost = (user) => { 
+        setLikeActive(!likeActive);
+        setDislikeActive(false);
+
+         if(likeActive === false) {
+             const newData = [...likes, user];
+             setLikes(newData);
+            
+        } 
+        else {
+           const lp = likes.filter(post => post.id !== user.id);
+          setLikes(lp);
+            }
+       
+    }
+    const handleDislikePost = (user) => {
+        setDislikeActive(!dislikeActive);
+        setLikeActive(false);
+        if(dislikeActive === false) {
+            const newList = [...dislikes, user];
+            setDislikes(newList);
+           
+       } 
+       else {
+          const dp = dislikes.filter(disPost => disPost.id !== user.id);
+          setDislikes(dp);
+           }
+    }
     
     return (
 
@@ -62,17 +98,16 @@ const PostCard = (props) => {
                 </Typography>
             </CardContent>
             <CardActions disableSpacing>
-                <IconButton aria-label="add to favorites">
-                    <FavoriteIcon />
+                <IconButton aria-label="add to favorites" onClick={()=>handleLikePost(props.user)} >
+                    <LikeIcon className={likeActive? classes.color : ''}/>
                 </IconButton>
-                <IconButton aria-label="share">
-                    <ShareIcon />
+                <IconButton aria-label="share"  onClick={()=>handleDislikePost(props.user)}>
+                    <DislikeIcon className={dislikeActive? classes.color : ''}/>
                 </IconButton>
                 <IconButton
-                    className={clsx(classes.expand)}
-                   
+                    className={clsx(classes.expand)}          
                 >
-                    <ExpandMoreIcon />
+                    <ShareIcon />
                 </IconButton>
             </CardActions>
 

@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { LikeContext } from '../../App';
+import { DislikeContext } from '../../App';
 import { withStyles, makeStyles } from '@material-ui/core/styles';
 import Table from '@material-ui/core/Table';
 import TableBody from '@material-ui/core/TableBody';
@@ -35,9 +35,9 @@ const useStyles = makeStyles({
     },
 });
 
-const Like = () => {
+const Dislike = () => {
     const classes = useStyles();
-    const [likes] = useContext(LikeContext);
+    const [dislikes] = useContext(DislikeContext);
     return (
         <div style={{margin:"30px"}}>
         <TableContainer component={Paper}>
@@ -49,13 +49,13 @@ const Like = () => {
                     </TableRow>
                 </TableHead>
                 <TableBody>
-                    {likes.map((lu) => (
-                        <StyledTableRow key={lu.id}>
+                    {dislikes.map((du) => (
+                        <StyledTableRow key={du.id}>
                             <StyledTableCell component="th" scope="row">
-                                <Avatar alt="Remy Sharp" src={lu.authorAvatar}/>
+                                <Avatar alt="Remy Sharp" src={du.authorAvatar}/>
                             </StyledTableCell>
                             <StyledTableCell component="th" scope="row">
-                                {lu.author}
+                                {du.author}
                             </StyledTableCell>
                         </StyledTableRow>
                     ))}
@@ -66,4 +66,4 @@ const Like = () => {
     );
 };
 
-export default Like;
+export default Dislike;

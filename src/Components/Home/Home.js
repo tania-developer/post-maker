@@ -1,23 +1,25 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import PostCard from '../PostCard/PostCard';
 import CircularProgress from '@material-ui/core/CircularProgress';
 import './Home.css'
+import { UserContext } from '../../App';
 
 const Home = () => {
-    const [users, setUsers] = useState([]);
-
+    const [allPost, setAllPost] = useContext(UserContext);
     useEffect(() => {
         fetch('https://my-json-server.typicode.com/tania-developer/post-maker/users')
         .then(res => res.json())
-        .then(data => setUsers(data));
-    },[])
+        .then(data => setAllPost(data));
+    },[]);
+
+    
     return (
         <div className="post-container">
             {
-                users.length === 0 &&<CircularProgress disableShrink />
+                allPost.length === 0 &&<CircularProgress disableShrink />
             }
             {
-                users.map(user => <PostCard user = {user} key={user.id}></PostCard>)
+                allPost.map(user => <PostCard user={user} key={user.id}></PostCard>)
             }
         </div>
     );
